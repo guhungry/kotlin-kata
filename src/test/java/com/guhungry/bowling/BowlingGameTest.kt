@@ -3,15 +3,29 @@ package com.guhungry.bowling
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class BowlingGameTest {
-    lateinit var sut: Game
+    private lateinit var sut: Game
 
     @BeforeEach
     fun setup() {
         sut = Game()
+    }
+
+    private fun rollMany(times: Int, pins: Int) {
+        repeat(times) {
+            sut.roll(pins)
+        }
+    }
+
+    private fun rollSpare() {
+        sut.roll(5)
+        sut.roll(5)
+    }
+
+    private fun rollStrike() {
+        sut.roll(10)
     }
 
     @Test
@@ -21,14 +35,8 @@ class BowlingGameTest {
         assertThat(sut.score(), equalTo(0))
     }
 
-    private fun rollMany(count: Int, pins: Int) {
-        for (i in 1..count) {
-            sut.roll(pins)
-        }
-    }
-
     @Test
-    fun allOne_Score20() {
+    fun allOnes_Score20() {
         rollMany(20, 1)
 
         assertThat(sut.score(), equalTo(20))
@@ -44,13 +52,13 @@ class BowlingGameTest {
     }
 
     @Test
-    fun oneStrike_Score24() {
+    fun oneStrike_Score26() {
         rollStrike()
+        sut.roll(5)
         sut.roll(3)
-        sut.roll(4)
         rollMany(16, 0)
 
-        assertThat(sut.score(), equalTo(24))
+        assertThat(sut.score(), equalTo(26))
     }
 
     @Test
@@ -58,14 +66,5 @@ class BowlingGameTest {
         rollMany(12, 10)
 
         assertThat(sut.score(), equalTo(300))
-    }
-
-    private fun rollStrike() {
-        sut.roll(10)
-    }
-
-    private fun rollSpare() {
-        sut.roll(5)
-        sut.roll(5)
     }
 }
