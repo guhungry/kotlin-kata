@@ -4,7 +4,6 @@ import org.hamcrest.Matcher;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class PrimeFactorJavaTest {
     }
 
     @NotNull
-    private Matcher<List<Integer>> isListOf(Integer ...ints) {
+    private Matcher<List<Integer>> isListOf(Integer... ints) {
         return equalTo(Arrays.asList(ints));
     }
 
